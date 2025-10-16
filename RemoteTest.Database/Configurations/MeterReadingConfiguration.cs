@@ -17,6 +17,9 @@ namespace RemoteTest.Database.Configurations
                 .HasForeignKey(mr => mr.AccountId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // Add a unique constraint on the AccountId column
+            builder.HasIndex(mr => mr.AccountId).IsUnique();
+
             // Additional configurations can be added here if needed
         }
     }
