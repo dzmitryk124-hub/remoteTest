@@ -10,6 +10,10 @@ const App: React.FC = () => {
         fetchData(setDtos);
     }, []);
 
+    const handleReload = () => {
+        fetchData(setDtos);
+    };
+
     const contents = dtos === undefined
         ? (
             <p>
@@ -27,6 +31,7 @@ const App: React.FC = () => {
                 <thead>
                     <tr>
                         <th>Id</th>
+                        <th>Account Id</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Date Time</th>
@@ -37,6 +42,7 @@ const App: React.FC = () => {
                     {dtos.map(x => (
                         <tr key={x.id}>
                             <td>{x.id}</td>
+                            <td>{x.accountId}</td>
                             <td>{x.firstName}</td>
                             <td>{x.lastName}</td>
                             <td>{x.meterReadingDateTime}</td>
@@ -50,6 +56,7 @@ const App: React.FC = () => {
     return (
         <div>
             <h1 id="tableLabel">Meter Readings</h1>
+            <button onClick={handleReload}>Reload Readings</button>
             <p>This component demonstrates fetching data from the server.</p>
             {contents}
         </div>

@@ -20,9 +20,18 @@ namespace RemoteTest.Server.Controllers
         [HttpGet("meter-reading")]
         public async Task<ActionResult<IEnumerable<MeterReadingViewDto>>> Get()
         {
-            var result = await this.meterReadingService.GetMeterReadings();
+            try
+            {
 
-            return Ok(result);
+                var result = await this.meterReadingService.GetMeterReadings();
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed ${nameof(Get)}", ex);
+                throw;
+            }
         }
 
         [HttpPost("meter-reading-uploads")]
@@ -32,9 +41,18 @@ namespace RemoteTest.Server.Controllers
             {
                 return BadRequest("No file uploaded.");
             }
-            var result = await this.meterReadingService.UploadMeterReadingsFile(file.OpenReadStream());
 
-            return Ok(result);
+            try
+            {
+                var result = await this.meterReadingService.UploadMeterReadingsFile(file.OpenReadStream());
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed ${nameof(Upload)}", ex);
+                throw;
+            }
         }
     }
 }
