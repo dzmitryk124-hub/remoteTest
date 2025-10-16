@@ -12,7 +12,7 @@ namespace RemoteTest.Database.Configurations
             builder.HasKey(mr => mr.Id);
 
             // Configure the foreign key relationship with Account
-            builder.HasOne<Account>()
+            builder.HasOne<Account>(mr => mr.Account)
                 .WithMany()
                 .HasForeignKey(mr => mr.AccountId)
                 .OnDelete(DeleteBehavior.Cascade);

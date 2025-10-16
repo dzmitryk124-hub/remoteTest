@@ -5,7 +5,6 @@ using RemoteTest.Core.Dto;
 namespace RemoteTest.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class MeterReadingController : ControllerBase
     {
         private readonly ILogger<MeterReadingController> _logger;
@@ -19,7 +18,7 @@ namespace RemoteTest.Server.Controllers
         }
 
         [HttpGet("meter-reading")]
-        public async Task<ActionResult<IEnumerable<MeterReadingDto>>> Get()
+        public async Task<ActionResult<IEnumerable<MeterReadingViewDto>>> Get()
         {
             var result = await this.meterReadingService.GetMeterReadings();
 

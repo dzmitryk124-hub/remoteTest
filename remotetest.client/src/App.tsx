@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import type { Forecast } from './models/Forecast';
+import type { MeterReadingViewDto } from './models/MeterReadingViewDto';
 import { fetchData } from './apiUtils/fetchData';
 
 const App: React.FC = () => {
-    const [forecasts, setForecasts] = useState<Forecast[]>();
+    const [dtos, setDtos] = useState<MeterReadingViewDto[]>();
 
     useEffect(() => {
-        fetchData(setForecasts);
+        fetchData(setDtos);
     }, []);
 
-    const contents = forecasts === undefined
+    const contents = dtos === undefined
         ? (
             <p>
                 <em>
@@ -26,19 +26,21 @@ const App: React.FC = () => {
             <table className="table table-striped" aria-labelledby="tableLabel">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Temp. (C)</th>
-                        <th>Temp. (F)</th>
-                        <th>Summary</th>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Date Time</th>
+                        <th>Value</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {forecasts.map(forecast => (
-                        <tr key={forecast.date}>
-                            <td>{forecast.date}</td>
-                            <td>{forecast.temperatureC}</td>
-                            <td>{forecast.temperatureF}</td>
-                            <td>{forecast.summary}</td>
+                    {dtos.map(x => (
+                        <tr key={x.id}>
+                            <td>{x.id}</td>
+                            <td>{x.firstName}</td>
+                            <td>{x.lastName}</td>
+                            <td>{x.meterReadingDateTime}</td>
+                            <td>{x.meterReadValue}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -47,7 +49,7 @@ const App: React.FC = () => {
 
     return (
         <div>
-            <h1 id="tableLabel">Weather forecast</h1>
+            <h1 id="tableLabel">Meter Readings</h1>
             <p>This component demonstrates fetching data from the server.</p>
             {contents}
         </div>

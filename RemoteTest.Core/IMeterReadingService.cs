@@ -4,7 +4,7 @@ namespace RemoteTest.Core
 {
     public interface IMeterReadingService
     {
-        Task<IEnumerable<MeterReadingDto>> GetMeterReadings();
+        Task<IEnumerable<MeterReadingViewDto>> GetMeterReadings();
         Task<MeterReadingsUploadResult> UploadMeterReadingsFile(Stream stream);
     }
 }
