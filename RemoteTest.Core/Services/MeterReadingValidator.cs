@@ -1,5 +1,6 @@
 ﻿using RemoteTest.Core.Dto;
 using RemoteTest.Core.Interfaces;
+using RemoteTest.Server.Entities;
 using System.Text.RegularExpressions;
 
 namespace RemoteTest.Core.Services
@@ -19,9 +20,9 @@ namespace RemoteTest.Core.Services
                        .Select(g => g.OrderByDescending(r => r.MeterReadingDateTime).First())
                        .ToList();
 
-        public List<MeterReadingDto> ExcludeOlderThanDb(List<MeterReadingDto> readings, Dictionary<int, DateTime> dbLatestReadings)
+        public List<MeterReadingDto> ExcludeOlderThanDb(List<MeterReadingDto> readings, Dictionary<int, MeterReading> dbLatestReadings)
             => readings.Where(r => !dbLatestReadings.ContainsKey(r.AccountId) ||
-                                  r.MeterReadingDateTime > dbLatestReadings[r.AccountId])
+                                  r.MeterReadingDateTime > dbLatestReadings[r.AccountId].MeterReadingDateTime)
                        .ToList();
     }
 }

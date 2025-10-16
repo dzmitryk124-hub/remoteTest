@@ -16,15 +16,15 @@ namespace RemoteTest.Database.Repositories
         public async Task<HashSet<int>> GetAllAccountIdsAsync()
             => await _dbContext.Accounts.Select(a => a.AccountId).ToHashSetAsync();
 
-        public async Task<Dictionary<int, DateTime>> GetLatestReadingsByAccountIdAsync()
+        public async Task<Dictionary<int, MeterReading>> GetLatestReadingsByAccountIdAsync()
             => await _dbContext.MeterReadings
                 .GroupBy(r => r.AccountId)
                 .Select(g => new
                 {
                     g.Key,
-                    LatestDate = g.Max(x => x.MeterReadingDateTime)
+                    Latest = g.OrderBy(x => x.MeterReadingDateTime).Last()
                 })
-                .ToDictionaryAsync(x => x.Key, x => x.LatestDate);
+                .ToDictionaryAsync(x => x.Key, x => x.Latest);
 
         public async Task BulkInsertOrUpdateAsync(List<MeterReading> readings)
         {

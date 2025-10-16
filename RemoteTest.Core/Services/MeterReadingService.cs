@@ -54,15 +54,25 @@ public sealed class MeterReadingService : IMeterReadingService
         meterReadings = _validator.ExcludeOlderThanDb(meterReadings, dbLatestReadings);
 
         // Step 6: Map to entities
-        var entities = meterReadings.Select(r => new MeterReading
+
+        var filteredDbReadings = new List<MeterReading>();
+        foreach (var meterReading in meterReadings)
         {
-            AccountId = r.AccountId,
-            MeterReadingDateTime = r.MeterReadingDateTime,
-            MeterReadValue = r.MeterReadValue
-        }).ToList();
+            var dbReading = dbLatestReadings
+                .Where(x => x.Key == meterReading.AccountId)
+                .Select(x => x.Value)
+                .FirstOrDefault();
+            dbReading ??= new MeterReading()
+            {
+                AccountId = meterReading.AccountId,
+            };
+            dbReading.MeterReadingDateTime = meterReading.MeterReadingDateTime;
+            dbReading.MeterReadValue = meterReading.MeterReadValue;
+            filteredDbReadings.Add(dbReading);
+        }
 
         // Step 7: Bulk insert or update
-        await _repository.BulkInsertOrUpdateAsync(entities);
+        await _repository.BulkInsertOrUpdateAsync(filteredDbReadings);
 
         return new MeterReadingsUploadResult
         {
