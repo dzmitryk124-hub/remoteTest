@@ -1,3 +1,4 @@
+using RemoteTest.Core;
 using RemoteTest.Database;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<MeterReadingDbContext>();
+builder.Services.AddScoped<IMeterReadingService, MeterReadingService>();
 
 var app = builder.Build();
 

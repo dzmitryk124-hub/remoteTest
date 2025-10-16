@@ -25,7 +25,6 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\RemoteTest.Core\RemoteTest.Core.csproj" />
-    <ProjectReference Include="..\RemoteTest.Entities\RemoteTest.Entities.csproj" />
   </ItemGroup>
 
 </Project>
