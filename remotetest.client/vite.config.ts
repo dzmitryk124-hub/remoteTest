@@ -50,7 +50,15 @@ export default defineConfig({
             '^/weatherforecast': {
                 target,
                 secure: false
-            }
+            },
+            '^/meter-reading': {
+                target,
+                secure: false
+            },
+            '^/meter-reading-uploads': {
+                target,
+                secure: false
+            },
         },
         port: parseInt(env.DEV_SERVER_PORT || '58395'),
         https: {

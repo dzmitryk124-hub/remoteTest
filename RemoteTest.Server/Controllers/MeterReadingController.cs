@@ -5,6 +5,7 @@ using RemoteTest.Core.Dto;
 namespace RemoteTest.Server.Controllers
 {
     [ApiController]
+    [Route("[controller]")]
     public class MeterReadingController : ControllerBase
     {
         private readonly ILogger<MeterReadingController> _logger;
@@ -18,15 +19,23 @@ namespace RemoteTest.Server.Controllers
         }
 
         [HttpGet("meter-reading")]
-        public async Task<IEnumerable<MeterReadingDto>> Get()
+        public async Task<ActionResult<IEnumerable<MeterReadingDto>>> Get()
         {
-            return await this.meterReadingService.GetMeterReadings();
+            var result = await this.meterReadingService.GetMeterReadings();
+
+            return Ok(result);
         }
 
         [HttpPost("meter-reading-uploads")]
-        public async Task<IEnumerable<MeterReadingsUploadResult>> Upload()
+        public async Task<ActionResult<MeterReadingsUploadResult>> Upload([FromForm] IFormFile file)
         {
-            return await this.meterReadingService.UploadMeterReadingsFile();
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
+            var result = await this.meterReadingService.UploadMeterReadingsFile(file.OpenReadStream());
+
+            return Ok(result);
         }
     }
 }

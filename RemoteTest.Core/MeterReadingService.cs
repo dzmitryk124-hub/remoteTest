@@ -9,9 +9,14 @@ namespace RemoteTest.Core
             throw new NotImplementedException();
         }
 
-        public async  Task<IEnumerable<MeterReadingsUploadResult>> UploadMeterReadingsFile()
+        public async  Task<MeterReadingsUploadResult> UploadMeterReadingsFile(Stream stream)
         {
-            throw new NotImplementedException();
+            var result = new MeterReadingsUploadResult 
+            { 
+                NumberOfFailedReadings = 0,
+                NumberOfSuccessfulReadings = 0,
+            };
+            return await Task.FromResult(result); 
         }
     }
 }
