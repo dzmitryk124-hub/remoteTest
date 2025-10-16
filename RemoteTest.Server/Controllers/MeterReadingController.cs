@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using RemoteTest.Core;
 using RemoteTest.Core.Dto;
+using RemoteTest.Core.Interfaces;
 
 namespace RemoteTest.Server.Controllers
 {

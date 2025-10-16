@@ -1,6 +1,6 @@
 ﻿using RemoteTest.Core.Dto;
 
-namespace RemoteTest.Core
+namespace RemoteTest.Core.Interfaces
 {
     public interface IMeterReadingService
     {

@@ -1,5 +1,7 @@
-using RemoteTest.Core;
+using RemoteTest.Core.Interfaces;
+using RemoteTest.Core.Services;
 using RemoteTest.Database;
+using RemoteTest.Database.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,9 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<MeterReadingDbContext>();
+builder.Services.AddScoped<IMeterReadingRepository, MeterReadingRepository>();
+builder.Services.AddScoped<ICsvMeterReadingParser, CsvMeterReadingParser>();
+builder.Services.AddScoped<IMeterReadingValidator, MeterReadingValidator>();
 builder.Services.AddScoped<IMeterReadingService, MeterReadingService>();
 
 var app = builder.Build();

@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EFCore.BulkExtensions" Version="9.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\RemoteTest.Database\RemoteTest.Database.csproj" />
     <ProjectReference Include="..\RemoteTest.Entities\RemoteTest.Entities.csproj" />
   </ItemGroup>
